@@ -11,7 +11,7 @@ export const addUser = async (user: IUser): Promise<User> => {
 	return userResponse;
 };
 
-export const findUser = async (userEmail: string): Promise<User | null> => {
+export const findUserByEmail = async (userEmail: string): Promise<User | null> => {
 	const userResponse = await prisma.user.findUnique({
 		where: {
 			email: userEmail
@@ -28,6 +28,20 @@ export const findManyUser = async (page: number, limit: number, name: string, em
 		},
 		skip: (page - 1) * limit,
 		take: limit,
+	});
+	return userResponse;
+};
+  
+export const findUserById = async (id: number): Promise<User | null> => {
+	const userResponse = await prisma.user.findUnique({
+		where: { id }
+	});
+	return userResponse;
+};
+
+export const deleteUser = async (id: number): Promise<User> => {
+	const userResponse = await prisma.user.delete({
+		where: { id },
 	});
 	return userResponse;
 };
