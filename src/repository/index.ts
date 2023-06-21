@@ -19,3 +19,16 @@ export const findUser = async (userEmail: string): Promise<User | null> => {
 	});
 	return userResponse;
 };
+
+export const findManyUser = async (page: number, limit: number, name: string, email: string): Promise<User[] | null> => {
+	const userResponse = await prisma.user.findMany({
+		where: {
+			name: { contains: name },
+			email: { contains: email },
+		},
+		skip: (page - 1) * limit,
+		take: limit,
+	});
+	return userResponse;
+};
+  
