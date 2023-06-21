@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { createUserService, findUserService, deleteUserService } from '../service';
+import { createUserService, findUserService, deleteUserService, updateUserService } from '../service';
 
 export const createUser = async (req: Request, res: Response): Promise<Response> => {
 	const { body } = req;
@@ -16,5 +16,12 @@ export const findUsers = async (req: Request, res: Response): Promise<Response> 
 export const deletUser = async (req: Request, res: Response): Promise<Response> => {
 	const { id } = req.params;
 	const users = await deleteUserService(Number(id));
+	return res.status(users.statusCode).json(users);
+};
+
+export const updateUser = async (req: Request, res: Response): Promise<Response> => {
+	const { id } = req.params;
+	const { name, email } = req.body;
+	const users = await updateUserService(Number(id), name, email);
 	return res.status(users.statusCode).json(users);
 };
