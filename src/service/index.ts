@@ -2,6 +2,8 @@ import formateResponse from '../helpers/formateResponse';
 import { addUser, findUserByEmail, findManyUser, deleteUser, findUserById, updateUserById } from '../repository';
 import { IFormateResponse } from '../types/IformateResponse';
 import { IUser } from '../types/Iuser';
+import bcrypt from 'bcrypt';
+
 
 export const createUserService = async (body: IUser): Promise<IFormateResponse> => {
 	try {
@@ -9,7 +11,8 @@ export const createUserService = async (body: IUser): Promise<IFormateResponse> 
 		if(existingUser) {
 			return formateResponse(null, 409, { details: 'User already exists' });
 		}
-		const newUser = await addUser(body);
+		const hashPassword = await bcrypt.hash(body.password, 10);
+		const newUser = await addUser({ ...body, password: hashPassword });
 		return formateResponse(newUser, 201);
 	} catch(error) {
 		return formateResponse(null, 500, { details: 'Internal server error' });
