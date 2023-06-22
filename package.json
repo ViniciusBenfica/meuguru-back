@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "ts-node-dev --transpile-only src/index.ts"
+    "dev": "ts-node-dev --transpile-only src/index.ts",
+    "seed": "ts-node prisma/seed.ts"
   },
   "author": "",
   "license": "ISC",
