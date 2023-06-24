@@ -1,7 +1,12 @@
 import { Request, Response } from 'express';
 import { createUserService, findUserService, deleteUserService, updateUserService } from '../service';
+import { validationResult } from 'express-validator';
 
 export const createUser = async (req: Request, res: Response): Promise<Response> => {
+	const errors = validationResult(req);
+	if (!errors.isEmpty()) {
+		return res.status(400).json({ errors: errors.array() });
+	}
 	const { body } = req;
 	const user = await createUserService(body);
 	return res.status(user.statusCode).json(user);
