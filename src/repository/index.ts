@@ -20,16 +20,28 @@ export const findUserByEmail = async (userEmail: string): Promise<User | null> =
 	return userResponse;
 };
 
-export const findManyUser = async (page: number, limit: number, name: string, email: string): Promise<User[] | null> => {
+export const findManyUser = async (page: number, limit: number, search: string): Promise<{users: User[] | null, totalPages: number}> => {
 	const userResponse = await prisma.user.findMany({
 		where: {
-			name: { contains: name },
-			email: { contains: email },
+			OR:[
+				{ name: { contains: search } },
+				{ email: { contains: search } },
+			]
 		},
 		skip: (page - 1) * limit,
 		take: limit,
 	});
-	return userResponse;
+	const count = await prisma.user.count({
+		where: {
+			OR: [
+				{ name: { contains: search } },
+				{ email: { contains: search } },
+			],
+		},
+	});
+	const totalPages = Math.ceil(count / limit);
+
+	return { users: userResponse, totalPages };
 };
   
 export const findUserById = async (id: number): Promise<User | null> => {
@@ -53,4 +65,3 @@ export const updateUserById = async (id: number, name: string, email: string): P
 	});
 	return userResponse;
 };
-  

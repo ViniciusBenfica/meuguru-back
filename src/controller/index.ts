@@ -8,8 +8,8 @@ export const createUser = async (req: Request, res: Response): Promise<Response>
 };
 
 export const findUsers = async (req: Request, res: Response): Promise<Response> => {
-	const { page = 1, limit = 10, name = '', email = '' } = req.query;
-	const users = await findUserService(Number(page), Number(limit), name as string, email as string);
+	const { page = 1, limit = 2, search = '' } = req.query;
+	const users = await findUserService(Number(page), Number(limit), search as string);
 	return res.status(users.statusCode).json(users);
 };
 

@@ -19,9 +19,9 @@ export const createUserService = async (body: IUser): Promise<IFormateResponse> 
 	}
 };
 
-export const findUserService = async (page: number, limit: number, name: string, email:string): Promise<IFormateResponse> => {
+export const findUserService = async (page: number, limit: number, search: string): Promise<IFormateResponse> => {
 	try {
-		const usersList = await findManyUser(page, limit, name, email);
+		const usersList = await findManyUser(page, limit, search);
 		return formateResponse(usersList, 200);
 	} catch(error) {
 		return formateResponse(null, 500, { details: 'Internal server error' });
