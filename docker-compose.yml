@@ -17,8 +17,6 @@ services:
     volumes:
       - .:/app
       - /app/node_modules
-    networks:
-      - network
     depends_on:
       - postgres
 

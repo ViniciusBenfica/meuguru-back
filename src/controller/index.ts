@@ -19,12 +19,20 @@ export const findUsers = async (req: Request, res: Response): Promise<Response> 
 };
 
 export const deletUser = async (req: Request, res: Response): Promise<Response> => {
+	const errors = validationResult(req);
+	if (!errors.isEmpty()) {
+		return res.status(400).json({ errors: errors.array() });
+	}
 	const { id } = req.params;
 	const users = await deleteUserService(Number(id));
 	return res.status(users.statusCode).json(users);
 };
 
 export const updateUser = async (req: Request, res: Response): Promise<Response> => {
+	const errors = validationResult(req);
+	if (!errors.isEmpty()) {
+		return res.status(400).json({ errors: errors.array() });
+	}
 	const { id } = req.params;
 	const { name, email } = req.body;
 	const users = await updateUserService(Number(id), name, email);
