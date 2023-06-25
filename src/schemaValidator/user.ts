@@ -7,7 +7,7 @@ export const createUserValidation = checkSchema({
 		},
 		isLength: {
 			errorMessage: 'The \'name\' field must be at least 1 character long.',
-			options: { min: 1 },
+			options: { min: 3 },
 		},
 	},
 	email: {
@@ -55,7 +55,7 @@ export const updateUserValidation = checkSchema({
 		},
 		isLength: {
 			errorMessage: 'The \'name\' field must be at least 1 character long.',
-			options: { min: 1 },
+			options: { min: 3 },
 		},
 	},
 	email: {
@@ -64,15 +64,6 @@ export const updateUserValidation = checkSchema({
 		},
 		isEmail: {
 			errorMessage: 'Invalid email format.',
-		},
-	},
-	password: {
-		notEmpty: {
-			errorMessage: 'The \'password\' field is required.',
-		},
-		isLength: {
-			errorMessage: 'The \'password\' field must be at least 1 character long.',
-			options: { min: 1 },
 		},
 	},
 });
