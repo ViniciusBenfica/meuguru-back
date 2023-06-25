@@ -12,13 +12,13 @@ services:
       - .env
     ports:
       - ${SERVER_PORT}:${SERVER_PORT}
-    networks:
-      - network
     volumes:
       - .:/app
       - /app/node_modules
     depends_on:
       - postgres
+    networks:
+      - network
 
   postgres:
     container_name: postgres
